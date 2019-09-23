@@ -59,24 +59,11 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
     <ul>
         <li>Philo van Kemenade (<a href="twitter.com/phivk">@phivk</a>) from whom I "stole" the general structure of the presentation and some of the images </li>
         <li>(original at <a href="https://slides.com/phivk/intro2python">https://slides.com/phivk/intro2python</a>)</li>
+        <li>Some material also from <a href="https://imagej.net/Introduction_into_Macro_Programming">https://imagej.net/Introduction_into_Macro_Programming</a></li>
         </ul>
     
     </section>
 
-
-
-    <section data-state="intro0">
-        <h2>
-            <b>This Workshop</b>
-        </h2>
-        
-   
-    <ul>
-        <li>Building blocks</li>
-        <li>Putting the pieces together</li>
-        <li>Writing complete structures</li></ul>
-    
-    </section>
 
 
 
@@ -103,29 +90,20 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 
     <section data-state="python">
-        <h2>Getting help</h2>
+        <h2>Why macros?</h2>
        
-           
-        <p>Documentation at <a href="https://imagej.nih.gov/ij/developer/macro/functions.html" target="_blank">https://imagej.nih.gov/ij/developer/macro/functions.html</a> </p>
-        <p>Plugins -> Macro -> Record is your best friend</p>      
+         <ul>
+             <li>Automation: do the same thing many times over</li>
+             <li>Reproducibility: do exactly the same thing every time, show the world what you've done</li>
+             <li>Sharing: let someone else do exactly the same analysis as you</li>
+             <li>Extension: do things Fiji cannot do by default</li>
+         </ul>  
+       
                 
     </section>
 
 
 
-
-
-   
-
-    <section data-menu-title="Building Blocks" data-state="bb">
-        
-        
-        <h1>
-            
-                Building Blocks
-        </h1>
-        
-    </section>
 
 
 
@@ -157,7 +135,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 
     <section data-state="bb">
-        <h2>Assigning variables in Fiji</h2>
+        <h2>Declaring variables in Fiji</h2>
         
             <pre><code>name = "Erick";
 gender = "male";
@@ -179,7 +157,7 @@ height = 1.73; </code></pre>
                     <font color="#e06666"><b>string</b></font> - a sequence of characters, comprising text
                 </p>
                 
-                <pre><code>"a", "London", 'X', 'General Assembly'</code></pre>
+                <pre><code>"a", "London", "X", "General Assembly"</code></pre>
 
                 <p style="text-align: left;">
                     <font color="#e06666"><b>int</b></font> - an integer, or whole number
@@ -201,31 +179,58 @@ height = 1.73; </code></pre>
 
                 
         </section>
+
+
+
+            <section data-state="bb">
+        <h2>Name vs value of a variable</h2>
+        
+            <p>A common pitfall is to include the name of a variable in a string. </p>
+          
+            <pre><code data-noescape>title = "Macro";
+//BAD - literally prints "title"
+//write("The name: title");     
+// GOOD - properly uses the title variable value
+write("The name: " + title); </code></pre>
+
+
+<p>The same principle applies when using variables which reflect parameters passed to a run() method, e.g. </p>
+          
+            <pre><code data-noescape>specifiedRadius = 3;
+//BAD - will literally pass "specifiedRadius"
+//run("Median...", "radius=specifiedRadius");  
+// GOOD - will correctly pass the radius variable value   
+run("Median...", "radius=" + specifiedRadius); </code></pre>
+
+<p>Note that whitespaces are not automatically added! </p>
+            <pre><code data-noescape>specifiedMethod = "Li";
+//BAD - does NOT work because the macro runs as "method=Liwhite"
+//run("Auto Threshold", "method=" + userDefinedAutoThreshold + "white");
+//GOOD - will correctly pass argument   
+run("Auto Threshold", "method=" + userDefinedAutoThreshold + " white");</code></pre>
+            
+    </section>
+
+
+    <section data-state="bb">
+        <h2>Self-referencing</h2>
+        
+            <p>You can use a variable name in both sides of an assignment, for example.</p>
+          
+            <pre><code>amount = amount * 2;</code></pre>
+
+
+<p>First, <i>amount * 2</i> is evaluated. The result is then assigned back to the variable <i>amount</i>, effectively doubling it.</p>
+          
+<p>A very important operation is to increment a variable's value by one; so important that there is a short form for it</p>
+            <pre><code>//both lines do the same thing
+counter = counter + 1;
+counter++;</code></pre>
+            
+    </section>
         
    
 
-    <section data-state="bb">
-            <h2>Changing types</h2>
-            <p>'Casting' a variable to another type requires some of the <a href="https://imagej.nih.gov/ij/developer/macro/functions.html" target="_blank">built-in functions</a> we have mentioned.</p>
-            <p>
-                <br/>
-            </p>
-            <pre><code>a = parseInt("42");
-b = parseFloat("1.69");
-c = d2s(1.5333, 2);
-print(c); //"1.53"
- </code></pre>
-            <br/>
-        </section>
-
-
-    <section data-state="bb">
-        <h2>Exercise
-            
-        </h2>
-        <br/>
-        Choose 4 things in this room and create variables of 4 different types based on them
-    </section>
 
 
 
@@ -321,83 +326,109 @@ print(c); //"1.53"
 
 
 
-    <section data-state="bb">
-        
-        <h2>
+
+        <section data-state="pp">
+            <h2>Functions</h2>
             
-                &nbsp;Questions?&nbsp;
+                <p><font color="#e06666"><b><i>Functions</i></b></font> perform a collections of tasks, bundled under a specific name
+                </p>
+                <p>Take input <i>argument(s)</i>, execute statement(s), return output
+                </p>
+                <p>
+                    Input and output can be of all different types
+                </p>
+                
+                <pre><code class="C">name = "Erick Ratamero";
+length = lengthOf(name);
+print(length);</code></pre>
             
-        </h2>
-        
-    </section>
+            <br/>
+        </section>
 
 
 
 
-    <section data-state="bb">
-        <h2>Exercise</h2>
-        
+
+
+        <section data-state="pp">
+            <h2>Built in functions</h2>
+            
             <p>
-                Create two 
-                    <font color="#e06666">
-                        <i>string variables</i>
-                    </font>:
-                
+                <a href="https://imagej.nih.gov/ij/developer/macro/functions.html" target="_blank">https://imagej.nih.gov/ij/developer/macro/functions.html</a>
             </p>
-            <p>
-                
-                    <i>first</i> for your first name and <i>last</i> for your last name.
-
-            </p>
-
-            <p>
-                
-                    Can you make your full name by combining <i>first</i> and <i>last</i>?
-                    
-            </p>
-      
            
-          <p>
-                <font color="#e06666">
+        </section>
 
-(Cheating encouraged)
-</font>
+
+<section data-state="pp">
+        <h2>Arguments</h2>
+        
+            <p>Arguments are parameters passed to a function. For example, the function <i>write</i> just want one parameter (the text to be written):
             </p>
+          
+            <pre><code class="C">write("Hello, World!");
+</code></pre>
+
+<p> If there are more parameters to be passed, they have to be separated by commas:</p>
+           
+            <pre><code class="C">newImage("My pretty new image", "8-bit black", 640, 480, 1);</code></pre>
        
+
+        
+    </section>
+
+
+    <section data-state="pp">
+        <h2>Functions</h2>
+        
+            <p>You can also <i>define</i> your own functions like this:
+            </p>
+          
+            <pre><code class="C">function function_name(argument(s)){
+actions with argument(s)
+return statement
+    }
+</code></pre>
+           
+            <pre><code class="C">function calculate(x, y, sigma){
+    factor = exp(-1.0*(pow(x,2)+pow(y,2))/(2*pow(sigma,2)));
+    
+    return factor;
+}</code></pre>
+       
+
+        
+    </section>
+
+
+
+   <section data-state="pp">
+        <h2>Comments</h2>
+        
+            <p>When you read your code again in six months from now, you want to understand what your code does, and why. For this, you can add comments, i.e. text which is ignored by ImageJ when it executes the macro.</p>
+          
+            <pre><code class="C">// This variable contains the radius of the circle to be drawn
+r = 15;</code></pre>
+           
+<p>You can also have multi-line comments enclosed in /* ... */ blocks:</p>
+
+            <pre><code class="C">/*
+ It turned out in practice that 0.5 is a good choice for alpha, because
+ it leads to fewer artifacts than anything larger, and it is large enough
+ to guarantee a quick convergence.
+*/
+alpha = 0.5;</code></pre>
+       
+
+        
     </section>
 
 
 
 
 
-    <section data-state="bb">
-        
-        
-        <h2>
-            
-                Collections
-            
-        </h2>
-    </section>
 
 
-
-
-
-    <section data-state="bb">
-        <h2>Collections of Values</h2>
-        
-        Values can also be stored in a 
-                <font color="#e06666">
-                    <b>
-                        <i>collection</i>
-                    </b>
-                </font>:
-            
-               <p><b>we'll only talk about the Array</b></p> 
-            
-         
-    </section>
     
     
 
@@ -434,14 +465,10 @@ print(c); //"1.53"
                 <pre><code class="java">
 // This macro demonstrates how to use the Array.* functions.
 
-  requires("1.42j");
   a1 = newArray(10, 5, 15, 2, 1.23456);
   a2 = Array.copy(a1);
-  list("copy", a2);
   a2 = Array.trim(a1, 2);
-  list("trim", a2);
   Array.sort(a1);
-  list("sort", a1);
   Array.getStatistics(a1, min, max, mean, std);
   print("stats");
   print("   min: "+min);
@@ -449,16 +476,12 @@ print(c); //"1.53"
   print("   mean: "+mean);
   print("   std dev: "+std);
   Array.fill(a1, -1);
-  list("fill", a1);
 
   a1 = newArray("one", "two", "three", "four");
   print("");
   a2 = Array.copy(a1);
-  list("copy", a2);
   a2 = Array.trim(a1, 2);
-  list("trim", a2);
   Array.sort(a1);
-  list("sort", a1);
 
   function list(name, a) {
       print(name);
@@ -474,43 +497,121 @@ print(c); //"1.53"
 
 
 
-    
-    <section data-state="bb">
-        
-        <h2>
+
+
+
+
+
+
+
+        <section data-state="pp">
+            <h2>Conditional statements</h2>
             
-                Questions?
+                <p><b><i><font color="#e06666">Conditional statements</font></i></b> enable you to deal with multiple options.
+                </p>
+                <p>
+                    A part of your code is executed based on the truth value of a condition. You perform conditional checks with: <b>if</b>
+
+                </p>
+                <pre><code class="C">if(condition){
+    action
+}</code></pre>
+                <pre><code class="C">age = 17;
+if(age &lt; 18){
+    print("no drinks for you");
+}
+... 
+no drinks for you</code></pre>
+                    
+        </section>
+
+
+
+
+<section data-state="pp">
+            <h2>Conditional statements</h2>
             
-        </h2>
-        
-    </section>
+                <p>You can add an extra action that will be executed in case your condition is <b>not</b> true using <b>else</b>:
+                </p>
+                
+                <pre><code class="C">if(condition){
+    action
+}else{
+    a different action
+}</code></pre>
+                <pre><code class="C">age = 19;
+if(age &lt; 18){
+    print("no drinks for you");
+}else{
+    print("go ahead!")
+}
+... 
+go ahead!</code></pre>
+                    
+        </section>
+
+
+        <section data-state="pp">
+            <h2>Nested conditionals</h2>
+            
+                <p>You can have as many ifs inside ifs inside ifs as you want. Also ifs inside elses, and elses inside ifs...
+                </p>
+                
+                <pre><code class="C">
+if(age &lt; 18){
+    print("no drinks for you");
+    if(age &lt; 16){
+        print("you are a child!");
+    }else{
+        print("you are a teen!");
+    }
+}else{
+    print("go ahead!")
+}
+... 
+age = 19;
+go ahead!
+...
+age = 17;
+no drinks for you
+you are a teen!
+...
+age = 9;
+no drinks for you
+you are a child!
+</code></pre>
+
+<p>Note the brackets!
+                </p>
+                    
+        </section>
 
 
 
 
 
 
+        <!-- INSERT EXAMPLE 1 HERE -->
 
 
 
-    <section data-menu-title="Putting the pieces together" data-state="pp">
-        
-        
-        <h1>
-                Putting the pieces together
 
-        </h1>
-        
-    </section>
+
+
 
 
 
 <section data-state="pp">
         
         
-        <h1>
-                Loops
-        </h1>
+        <h2>
+                Example 1
+        </h2>
+
+        <p> Create a macro that prints whether a number is: between 1500 and 2700, multiple of 5, divisible by 7. </p>
+        <p>Example: 1610 should print "is between 1500 and 2700", "divisible by 7" AND "multiple of 5". </p>
+        <p>25 should print only "multiple of 5". </p>
+        <p>22 should print nothing.</p>
         
     </section>
 
@@ -535,16 +636,7 @@ print(c); //"1.53"
                 <pre><code class="C">for (start; condition; increment){
           do something
   }</code></pre>
-            
-            
-        </section>
-
-
-
-    <section data-state="pp">
-        <h2>For Loops</h2>
-        
-        <p>for example:
+  <p>for example:
         </p>
         <pre><code class="C">ages = newArray(18, 21, 16, 12);
 for(i=0; i< lengthOf(ages); i++){
@@ -555,206 +647,124 @@ for(i=0; i< lengthOf(ages); i++){
 21
 16
 12 </code></pre>
-        
-    </section>
-
-
-
-
-
-        <section data-state="pp">
-            <h2>While Loops</h2>
             
-                <p>A <b><i><font color="#e06666">while-loop</font></i></b> is useful when you don’t know when you want to stop looping yet.
-                </p>
-                <p>A while-loop statement checks a <i>condition</i> and loops until the condition is no longer satisfied.
-                </p>
-                
-                
-                <pre><code class="C">while (condition){
-    do something;
-}
-   </code></pre>
-                
-           
+            
         </section>
 
 
 
-
-
-
-
-
-
-
-
-
     <section data-state="pp">
-        <h2>While Loops</h2>
-        <p>for example:
-           
+        <h2>Nested Loops</h2>
+        
+        <p>Sometimes it is necessary to have a loop inside another loop:
         </p>
-        
-        <pre><code class="C">x = 5;
-while(x > 0){
-    print("hooray!");
-    x = x - 1;
-}
-... 
-hooray!
-hooray!
-hooray!
-hooray!
-hooray!
-</code></pre>
-        
-    </section>
-
-
-
-
-
-
-
-    <section data-state="pp">
-        
-        <h2>
-            Conditional Statements
-        </h2>
-        
-    </section>
-
-
-
-
-
-
-
-
-        <section data-state="pp">
-            <h2>Conditional statements</h2>
-            
-                <p><b><i><font color="#e06666">Conditional statements</font></i></b> enable you to deal with multiple options.
-                </p>
-                <p>
-                    A part of your code is executed based on the truth value of a condition. You perform conditional checks with: <b>if, else</b>
-
-                </p>
-                <pre><code class="python">if(condition){
-    action
-}
-else{
-    final action
-}</code></pre>
-                <pre><code class="C">age = 17;
-if(age &lt; 18){
-    print("no drinks for you");
-}
-... 
-no drinks for you</code></pre>
-                    
-        </section>
-
-
-
-
-
-
-
-
-
-
-
-    <section data-state="pp">
-        
-        <h2>
-            Functions
-        </h2>
-        
-    </section>
-
-
-
-
-
-
-
-
-        <section data-state="pp">
-            <h2>Functions</h2>
-            
-                <p><font color="#e06666"><b><i>Functions</i></b></font> perform a collections of tasks, bundled under a specific name
-                </p>
-                <p>Take input <i>argument(s)</i>, execute statement(s), return output
-                </p>
-                <p>
-                    Input and output can be of all different types
-                </p>
-                
-                <pre><code class="C">name = "Erick Ratamero";
-length = lengthOf(name);
-print(length);</code></pre>
-            
-            <br/>
-        </section>
-
-
-
-
-
-
-        <section data-state="pp">
-            <h2>Built in functions</h2>
-            
-            <p>
-                <a href="https://imagej.nih.gov/ij/developer/macro/functions.html" target="_blank">https://imagej.nih.gov/ij/developer/macro/functions.html</a>
-            </p>
-           
-        </section>
-
-
-
-
-
-    <section data-state="pp">
-        <h2>Functions</h2>
-        
-            <p>You can also <i>define</i> your own functions like this:
-            </p>
-          
-            <pre><code class="C">function function_name(argument(s)){
-actions with argument(s)
-return statement
+        <pre><code class="C">ages = newArray(18, 21, 16, 12);
+for(i=0; i< lengthOf(ages); i++){
+    for (j=0; j&lt; i; j++){
+    print(j);
     }
-</code></pre>
-           
-            <pre><code class="C">function calculate(x, y, sigma){
-    factor = exp(-1.0*(pow(x,2)+pow(y,2))/(2*pow(sigma,2)));
-    
-    return factor;
-}</code></pre>
-       
+}
+....
+1 2 3 ... 18
+1 2 3 ... 21
+1 2 3 ... 16
+1 2 3 ... 12</code></pre>
+        
+    </section>
 
+
+        <section data-state="pp">
+        <h2>Warning!</h2>
+        
+        <p>It's very easy to create a loop that runs infinitely and never ends.
+        </p>
+        <pre><code class="C">ages = newArray(18, 21, 16, 12);
+for(i=0; i< lengthOf(ages); i++){
+    print(ages[i]);
+    i = i - 1;
+}
+....
+18
+18
+18
+18
+...</code></pre>
         
     </section>
 
 
 
 
-
-
-
-
-     <section data-state="pp">
+<section data-state="pp">
+        
         
         <h2>
-            
-                Questions?
-            
+                Example 2
         </h2>
+
+        <p> Create a macro that goes through each slice on an image and print the slice number. </p>
+        <p>Apply it to <a href="material/blobs.tif">blobs.tif</a> and <a href="material/head.tif">head.tif</a>.</p>
         
     </section>
+
+
+
+       <section data-state="pp">
+        <h2>Recording a macro</h2>
+        
+        <p>Use [Plugins -> Macros -> Record] to save commands for your macro. Hit the <i>Create</i> button to automatically put all commands into the macro editor.
+        </p>
+        <img src="img-ia/macros.png">
+        
+    </section>
+
+
+
+       <section data-state="pp">
+        <h2>Making it usable</h2>
+        
+        <p>You might need to generalise your macro. For example, if you merge channels, you might have a command like
+        </p>
+        <pre><code class="C">run("Merge Channels...",
+    "red=[Edges of boats.gif] green=boats.gif blue=boats.gif gray=*None*");</code></pre>
+    <p>That command depends on the current image's name. To make it generic, you can do, for example:</p>
+    <pre><code class="C">title = getTitle();
+run("Merge Channels...",
+     "red=[Edges of " + title + "] green=" + title + " blue=" + title + " gray=*None*");</code></pre>
+        
+    </section>
+
+
+
+
+<section data-state="pp">
+        
+        
+        <h2>
+                Example 3
+        </h2>
+
+        <p> Write a macro that saves each timepoint of <a href="material/timelapse.tif">timelapse.tif</a> as a separate image with names like timelapse_1.tif, timelapse_2.tif and so on. </p>
+        <p>Make sure it works no matter what the name of the image is or how many timepoints it has!</p>
+        
+    </section>
+
+
+
+    <section data-state="pp">
+        
+        
+        <h2>
+                I want more info!
+        </h2>
+
+        <p> There are <i>many</i> more examples of macros available at <a href="https://imagej.net/macros/">https://imagej.net/macros/</a>. </p>
+        <p>All functions you can use in a macro are documented at <a href="https://imagej.nih.gov/ij/developer/macro/functions.html">https://imagej.nih.gov/ij/developer/macro/functions.html</a></p>
+        <p>If you have questions, the best place on the internet to ask them is <a href="http://forum.image.sc">http://forum.image.sc</a>!</p>
+        
+    </section>
+
+
 
 
 
