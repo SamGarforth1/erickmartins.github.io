@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Introduction to Data Analysis with Python</title>
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/cci.css">
+<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+<!-- Theme used for syntax highlighting of code -->
+<link rel="stylesheet" href="lib/css/zenburn.css">
+<!-- Printing and PDF exports -->
+<script>
+var link = document.createElement( 'link' );
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+document.getElementsByTagName( 'head' )[0].appendChild( link );
+</script>
+</head>
+<body>
+<div class="reveal">
+<!-- Header logo -->
+<!--img style="position:fixed;top:1em;right:1em;" src="img/logo_cci.png" width="15%"-->
+<!-- Slide Title -->
+<header style="position: absolute;top: 1em; left: 1em; z-index:10;"></header>
+
+
+<div class="slides">
+    <section data-menu-title="Title">
+<h2>Assembling a ImageJ macro</h2>
+<h4>Sam Garforth, Daniel Moore, Lewis Moseley<br>Research Fellow</h4>
+</section>
+
+
+<section data-state="intro0">
+        <h2>
+            <b>Acknowledgements</b>
+        </h2>
+        
+   
+    <ul>
+        <li>Erick Martins for session plan and original slides </li>
+        <li>Philo van Kemenade (<a href="twitter.com/phivk">@phivk</a>) from whom I "stole" the general structure of the presentation and some of the images </li>
+        <li>(original at <a href="https://slides.com/phivk/intro2python">https://slides.com/phivk/intro2python</a>)</li>
+        <li>Some material also from <a href="https://imagej.net/Introduction_into_Macro_Programming">https://imagej.net/Introduction_into_Macro_Programming</a></li>
+        </ul>
+    
+    </section>
+
+
+    <section data-state="python">
+        <h2>Why macros?</h2>
+       
+         <ul>
+             <li>Automation: do the same thing many times over</li>
+             <li>Reproducibility: do exactly the same thing every time, show the world what you've done</li>
+             <li>Sharing: let someone else do exactly the same analysis as you</li>
+             <li>Extension: do things Fiji cannot do by default</li>
+         </ul>  
+       
+                
+    </section>
+
+    <section data-state="python">
+        <h2>"My first proper macro"</h2>
+        <h3>Objective: apply a simple analysis pipeline over a set of images</h3>
+       
+         <ul>
+             <li>Data: files </li>
+             <li>Save these images to your desktop in a folder called "Input"</li>
+             <li>Make a new folder called "Output"</li>
+             <li>Find the ImageJ macro template "Process_Folder"</li>
+         </ul>  
+       
+                
+    </section>
+
+    <section data-state="python">
+        <h2>"Task 1:"</h2>
+       
+         <ul>
+             <li>Open every image and print the Image name to the log.</li>
+             <li>(Hint: What do the variables input, output and file mean?)</li>
+         </ul>  
+       
+                
+    </section>
+    
+    <section data-state="python">
+        <h2>"Task 2:"</h2>
+       
+         <ul>
+             <li>Open every image, print how many slices there are in the image and then close the image.</li>
+             <li>i.e. you shouldn't have all of the image open at the end</li>
+         </ul>  
+       
+                
+    </section>
+    
+
+                </section>
+    
+        <section data-state="python">
+        <h2>"Task 3:"</h2>
+       
+         <ul>
+             <li>Open every image, print how many slices there are in the image...</li>
+             <li>do a Z projection between slices 3 and 7...</li>
+             <li>then save this as a seperate image (with a suitable filename).</li>
+             <li>Close all the images.</li>
+         </ul>  
+       
+                
+    </section>
+
+                </section>
+    
+        <section data-state="python">
+        <h2>"Task 4:"</h2>
+       
+         <ul>
+             <li>Open every image, print how many slices there are in the image then ...</li>
+             <li>do a Z projection between slices 3 and 7,... </li>
+             <li>subtract the background fluorescence... </li>
+             <li>then save this as a seperate image (with a suitable filename).</li>
+             <li>Close all the images.</li>
+         </ul>  
+       
+                
+    </section>
+        <section data-state="python">
+        <h2>"Task 5:"</h2>
+       
+         <ul>
+             <li>Open every image, print how many slices there are in the image then ...</li>
+             <li>do a Z projection between slices 3 and 7,... </li>
+             <li>measure the "mean gray value"...</li>
+             <li>subtract the background fluorescence... </li>
+             <li>then save this as a seperate image (with a suitable filename).</li>
+             <li>Close all the images</li>
+             <li>Save the results table as a .csv file.</li>
+         </ul>  
+       
+                
+    </section>
+
+
+
+    </div>
+
+
+
+
+
+<img style="position:fixed;bottom:1em;right:1em;" src="img/logo_WMS.jpg" width="10%">
+</div>
+
+    <script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+// More info about config & dependencies:
+// - https://github.com/hakimel/reveal.js#configuration
+// - https://github.com/hakimel/reveal.js#dependencies
+Reveal.initialize({
+    controls: false,
+    slideNumber: true, //-- Added for development
+dependencies: [
+{ src: 'plugin/markdown/marked.js' },
+{ src: 'plugin/markdown/markdown.js' },
+{ src: 'plugin/notes/notes.js', async: true },
+{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+{ src: 'plugin/menu/menu.js' }
+],
+menu: {
+hideMissingTitles: true,
+themes: false,
+transitions: false,
+//markers: true,
+numbers: true,
+openButton: false,
+titleSelector: 'span.menu-title'
+
+}
+});
+</script>
+</body>
+</html>
