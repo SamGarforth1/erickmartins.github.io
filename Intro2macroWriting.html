@@ -159,7 +159,8 @@ function processFile(input, output, file) {
        
          <ol>
              <li>Opens every image, print how many slices there are in the image...</li>
-             <li>does a Z projection between slices 3 and 7...</li>
+             <li>sets the frame to 5, duplicates the image</li>
+	     <li>subtracts the background</li>
              <li>then saves this as a seperate image (with a suitable filename).</li>
              <li>Closes all the images.</li>
          </ol>  
@@ -171,12 +172,9 @@ function processFile(input, output, file) {
     
     <section data-menu-title="Task 4">
         <h2>Task 4- Create a macro that:</h2>
-       
          <ol>
              <li>Opens every image, prints how many slices there are in the image then ...</li>
-             <li>does a Z projection between slices 3 and 7,... </li>
-             <li>then saves this as a seperate image (with a suitable filename).</li>
-	     <li>Also loops through every individual slice of the image and saves as a new image with background subtraction</li>
+	     <li>Loops through every individual slice of the image, subtracts the background and saves each as new image.</li>
              <li>Closes all the images.</li>
          </ol>  
        
@@ -184,18 +182,12 @@ function processFile(input, output, file) {
     </section>
     <section data-menu-title="Task 5">
         <h2>Task 5- Create a macro that:</h2>
-       
          <ol>
-             <li>Opens every image, print how many slices there are in the image then ...</li>
-             <li>does a Z projection between slices 3 and 7,... </li>
-             <li>measures the "mean gray value" of this projection...</li>
-             <li>then saves this as a seperate image (with a suitable filename).</li>
-	     <li>Loops through every individual slice of the image and saves as a new image with background subtraction.</li>
-             <li>Closes all the images.</li>
-             <li>And then saves the results table as a .csv file.</li>
-         </ol>  
-       
-                
+	     <li>Opens every image, prints how many slices there are in the image then ...</li>
+	     <li>Loops through every individual slice of the image and saves each as new image.</li>
+             <li>Does a Z projection between slices 3 and 7 and measures the "mean gray value" of this projection.</li>
+             <li>Closes all the images and then saves the results table as a .csv file.</li>
+         </ol>     
     </section>
 	
     <section data-menu-title="Solution 1">
@@ -282,8 +274,10 @@ function processFolder(input) {
 function processFile(input, output, file) {	
 	open(input+"/"+file);
 	print(nSlices);
-	run("Z Project...", "start=3 stop=7 projection=[Average Intensity]");
-	saveAs("tiff", output+"/"+File.nameWithoutExtension+"_projection.tiff");
+	setSlice(5);
+	run("Duplicate...", " ");
+	run("Subtract Background...", "rolling=20");
+	saveAs("Tiff", output+"/"+File.nameWithoutExtension+"_slice5.tiff");
 	close();
 	close();
 	//or close("*")
@@ -315,9 +309,6 @@ function processFolder(input) {
 function processFile(input, output, file) {	
 	open(input+"/"+file);
 	print(nSlices);
-	run("Z Project...", "start=3 stop=7 projection=[Average Intensity]");
-	saveAs("tiff", output+"/"+File.nameWithoutExtension+"_projection_BackSubtract.tiff");
-	close();
 	for (i=1; i<=nSlices; i++){
 		setSlice(i);
 		run("Duplicate...", " ");
@@ -354,11 +345,6 @@ function processFolder(input) {
 function processFile(input, output, file) {	
 	open(input+"/"+file);
 	print(nSlices);
-	run("Z Project...", "start=3 stop=7 projection=[Average Intensity]");
-	run("Set Measurements...", "mean redirect=None decimal=7");
-	run("Measure");
-	run("Subtract Background...", "rolling=100");
-	saveAs("tiff", output+"/"+File.nameWithoutExtension+"_projection_BackSubtract.tiff");
 	for (i=1; i<=nSlices; i++){
 		setSlice(i);
 		run("Duplicate...", " ");
@@ -366,7 +352,12 @@ function processFile(input, output, file) {
 		saveAs("tiff", output+"/"+File.nameWithoutExtension+"slice"+i+".tiff");
 		close();
 	}
-	close();
+	run("Z Project...", "start=3 stop=7 projection=[Average Intensity]");
+	run("Set Measurements...", "mean redirect=None decimal=7");
+	run("Measure");
+	run("Subtract Background...", "rolling=100");
+	saveAs("tiff", output+"/"+File.nameWithoutExtension+"_projection_BackSubtract.tiff");
+	close("*");
 }
 
 // Note this is outside the processFile function 
