@@ -41,8 +41,6 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
    
     <ul>
         <li>Erick Martins for session plan and original slides (<a href="https://erickmartins.github.io/ImageAnalysis.html">https://erickmartins.github.io/ImageAnalysis.html)</a></li>
-        <li>Philo van Kemenade (<a href="twitter.com/phivk">@phivk</a>) from whom I "stole" the general structure of the presentation and some of the images </li>
-        <li>(original at <a href="https://slides.com/phivk/intro2python">https://slides.com/phivk/intro2python</a>)</li>
         <li>Some material also from <a href="https://imagej.net/Introduction_into_Macro_Programming">https://imagej.net/Introduction_into_Macro_Programming</a></li>
         </ul>
     
@@ -176,7 +174,7 @@ function processFile(input, output, file) {
 	
 
 	<section data-menu-title="Task 5">
-        <h2>Task 4- Create a macro that:</h2>
+        <h2>Task 5- Create a macro that:</h2>
          <ol>
              <li>Opens every image, prints how many slices there are in the image then ...</li>
 	     <li>Loops through every individual slice of the image, subtracts the background and saves each as new image.</li>
@@ -355,9 +353,6 @@ function processFile(input, output, file) {
 	}
 	close();
 }
-
-// Note this is outside the processFile function 
-saveAs("Results", output+"/MeanIntensity.csv");
     </code></pre>
     </section>
 	    
