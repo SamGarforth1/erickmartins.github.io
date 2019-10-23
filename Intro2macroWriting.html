@@ -28,7 +28,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
 
 <div class="slides">
     <section data-menu-title="Title">
-<h2>Assembling a ImageJ macro</h2>
+<h2>Assembling a ImageJ macro- Session 6</h2>
 	    <h4>Sam Garforth,<br> Daniel Moore,<br>Lewis Mosby,<br><b>PhD helpers</b></h4>
 	    
 	    <p> Hit <b>m</b> to see the plan for today </p>
@@ -71,9 +71,7 @@ document.getElementsByTagName( 'head' )[0].appendChild( link );
              <li>Unzip (right click and "Extract All") and rename the folder to <code>Input</code></li>
              <li>Make another folder on the desktop called <code>Output</code></li>
              <li>Find the ImageJ macro template "Process_Folder"<br><code>[File > New > Script...]</code><br><code>[Templates > ImageJ 1.x > Batch > Process Folder (IJ1 macro)]</code></li>
-         </ul>  
-       
-                
+         </ul>    
     </section>
     
             <section data-state="python">
@@ -123,9 +121,7 @@ function processFile(input, output, file) {
              <li>Remember the macro recorder.</li>
          </ul>
 		<br/>
-	<img src="img-ia/semi-meme.jpeg" width="300"/>
-       
-                
+	<img src="img-ia/semi-meme.jpeg" width="300"/>     
     </section>
 
     <section data-menu-title="Task 1">
@@ -400,6 +396,57 @@ function processFile(input, output, file) {
 // Note this is outside the processFile function 
 saveAs("Results", output+"/MeanIntensity.csv");
     </code></pre>
+    </section>
+	
+<div class="slides">
+    <section data-menu-title="Title2">
+<h2>Assembling a ImageJ macro- Session 7</h2>
+	    <h4>Sam Garforth,<br> Daniel Moore,<br>Lewis Mosby,<br><b>PhD helpers</b></h4>
+	    
+	    <p> Hit <b>m</b> to see the plan for today </p>
+</section>
+	
+    <section data-menu-title="Objective2">
+        <h2>A more complex FIJI macro</h2>
+        <h3>Objective: a more advanced macro similar to the assignment</h3>
+       
+         <ul>
+             <li>Download our <a href="material/Macro2.zip">test data</a> to your desktop.</li>
+             <li>Unzip (right click and "Extract All") and rename the folder to <code>Input</code></li>
+             <li>Make another folder on the desktop called <code>Output</code></li>
+             <li>Find the ImageJ macro template "Process_Folder"<br><code>[File > New > Script...]</code><br><code>[Templates > ImageJ 1.x > Batch > Process Folder (IJ1 macro)]</code></li>
+         </ul>    
+    </section>
+	
+	<section data-state="python">
+        <h2>Introduction</h2>
+       
+         <ul>
+             <li>There are six z-stack images of cells. Each has three channels: a cytoplasmic marker (1), a brightfield image (2) and a fluorescence image (3).</li>
+             <li>Whilst the first two channels could be useful for cell segmentation all we want here is an accuracte count of the number of foci in the third channel.</li>
+	     <li>We will try two methods of finding the number of foci: thresholding versus finding maxima.</li>
+	     <li>There's multiple ways to do these tasks and lots of them have validity.</li>
+         </ul>
+		<br/>
+	<img src="img-ia/semi-meme.jpeg" width="300"/>     
+    </section>
+	    
+    <section data-menu-title="Task 1">
+        <h2>Task 1- Create a macro that:</h2>
+         <ol>
+             <li>Opens every image and performs a z-projection on the fluorescence channel.</li>
+	     <li>Save a thresholded version of this projection.</li>
+         </ol> 
+	    <p> You'll want to close all images as you move onto the next file. Remember to generalise your code so that the image name doesn't matter.</p>
+    </section>
+	
+    <section data-menu-title="Task 1">
+        <h2>Task 2- Create a macro that:</h2>
+         <ol>
+             <li>Opens every image and performs a z-projection on the fluorescence channel.</li>
+	     <li>Save a thresholded version of this projection.</li>
+         </ol> 
+	    <p> You'll want to close all images as you move onto the next file. Remember to generalise your code so that the image name doesn't matter.</p>
     </section>
 
 <img style="position:fixed;bottom:1em;right:1em;" src="img/logo_WMS.jpg" width="10%">
