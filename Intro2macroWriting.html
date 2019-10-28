@@ -608,7 +608,7 @@ processFolder(input);
 
 function processFolder(input) {
 	total = 0;
-	f = File.open(input+"/totals.csv");
+	f = File.open(output+"/totals.csv");
 	print(f, "file,count");
 	list = getFileList(input);
 	list = Array.sort(list);
