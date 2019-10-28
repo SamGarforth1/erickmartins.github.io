@@ -510,7 +510,9 @@ function processFile(input, output, file) {
     <section data-menu-title="Solution 2">
     <h2>Solution 2:</h2>
     <pre><code data-trim data-noescape>
-
+#@ File (label = "Input directory", style = "directory") input
+#@ File (label = "Output directory", style = "directory") output
+#@ String (label = "File suffix", value = ".tif") suffix
 
 processFolder(input);
 
