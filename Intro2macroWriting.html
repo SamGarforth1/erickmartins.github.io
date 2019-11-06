@@ -215,7 +215,7 @@ function processFolder(input) {
 
 function processFile(input, output, file) {	
 	print(file);
-	// or print(input+ file.seperator + file);
+	// or print(input+ File.seperator + file);
 }
     </code></pre>
     </section>
@@ -244,7 +244,7 @@ function processFolder(input) {
 
 function processFile(input, output, file) {
 	
-	open(input+"/"+file);
+	open(input+File.separator+file);
 	print(nSlices);
 	close();
 }
@@ -276,7 +276,7 @@ function processFile(input, output, file) {
 	open(input+"/"+file);
 	print(nSlices);
 	run("Duplicate...", " ");
-	saveAs("Tiff", output+"/"+File.nameWithoutExtension+"_slice1.tiff");
+	saveAs("Tiff", output+File.separator+File.nameWithoutExtension+"_slice1.tiff");
 	close();
 	close();
 	//or close("*")
@@ -311,7 +311,7 @@ function processFile(input, output, file) {
 	setSlice(5);
 	run("Duplicate...", " ");
 	run("Subtract Background...", "rolling=20");
-	saveAs("tiff", output+"/"+File.nameWithoutExtension+"slice5"+".tiff");
+	saveAs("tiff", output+File.separator+File.nameWithoutExtension+"_slice5"+".tiff");
 	close();
 	close();
 }
@@ -346,7 +346,7 @@ function processFile(input, output, file) {
 		setSlice(i);
 		run("Duplicate...", " ");
 		run("Subtract Background...", "rolling=20");
-		saveAs("tiff", output+"/"+File.nameWithoutExtension+"slice"+i+".tiff");
+		saveAs("tiff", output+File.separator+File.nameWithoutExtension+"_slice"+i+".tiff");
 		close();
 	}
 	close();
@@ -382,19 +382,19 @@ function processFile(input, output, file) {
 		setSlice(i);
 		run("Duplicate...", " ");
 		run("Subtract Background...", "rolling=20");
-		saveAs("tiff", output+"/"+File.nameWithoutExtension+"slice"+i+".tiff");
+		saveAs("tiff", output+File.separator+File.nameWithoutExtension+"_slice"+i+".tiff");
 		close();
 	}
 	run("Z Project...", "start=3 stop=7 projection=[Average Intensity]");
 	run("Set Measurements...", "mean redirect=None decimal=7");
 	run("Measure");
 	run("Subtract Background...", "rolling=100");
-	saveAs("tiff", output+"/"+File.nameWithoutExtension+"_projection_BackSubtract.tiff");
+	saveAs("tiff", output+File.separator+File.nameWithoutExtension+"_projection_BackSubtract.tiff");
 	close("*");
 }
 
 // Note this is outside the processFile function 
-saveAs("Results", output+"/MeanIntensity.csv");
+saveAs("Results", output+File.separator+"MeanIntensity.csv");
     </code></pre>
     </section>
 	
