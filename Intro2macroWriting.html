@@ -501,7 +501,7 @@ function processFile(input, output, file) {
 	selectWindow(ch3);
 	close();
 	run("Auto Threshold", "method=MaxEntropy white");
-	saveAs("tiff", output+"/"+orig_name + "_thresh.tiff");
+	saveAs("tiff", output+File.separator+orig_name + "_thresh.tiff");
 	close();
 }
     </code></pre>
@@ -541,12 +541,12 @@ function processFile(input, output, file) {
 	run("Auto Threshold", "method=MaxEntropy white");
 	thresh = getTitle();
 	run("Analyze Particles...", "size=10-Infinity show=Outlines display clear");
-	saveAs("tiff", output+"/"+orig_name + "_outlines.tiff");
+	saveAs("tiff", output+File.separator+orig_name + "_outlines.tiff");
 	close();
 	selectWindow(thresh);
 	close();
 	selectWindow("Results"); 
-	saveAs("results", output+"/"+orig_name + "_results.csv");
+	saveAs("results", output+File.separator+orig_name + "_results.csv");
 	run("Close");
 }
     </code></pre>
@@ -589,7 +589,7 @@ function processFile(input, output, file) {
 	run("Find Maxima...", "prominence=80 output=List");
 	close();
 	selectWindow("Results"); 
-	saveAs("results", output+"/"+orig_name + "_maxima.csv");
+	saveAs("results", output+File.separator+orig_name + "_maxima.csv");
 	run("Close");
 	
 }
@@ -608,7 +608,7 @@ processFolder(input);
 
 function processFolder(input) {
 	total = 0;
-	f = File.open(output+"/totals.csv");
+	f = File.open(output+File.separator+"totals.csv");
 	print(f, "file,count");
 	list = getFileList(input);
 	list = Array.sort(list);
@@ -639,7 +639,7 @@ function processFile(input, output, file) {
 	run("Find Maxima...", "prominence=80 output=List");
 	close();
 	selectWindow("Results"); 
-	saveAs("results", output+"/"+orig_name + "_maxima.csv");
+	saveAs("results", output+File.separator+orig_name + "_maxima.csv");
 	results = nResults;
 	run("Close");
 	return results;
