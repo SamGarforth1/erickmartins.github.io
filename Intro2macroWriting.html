@@ -540,6 +540,7 @@ function processFile(input, output, file) {
 	close();
 	run("Auto Threshold", "method=MaxEntropy white");
 	thresh = getTitle();
+	run("Set Measurements...", "area center redirect=None decimal=7");
 	run("Analyze Particles...", "size=10-Infinity show=Outlines display clear");
 	saveAs("tiff", output+File.separator+orig_name + "_outlines.tiff");
 	close();
